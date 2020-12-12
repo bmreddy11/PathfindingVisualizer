@@ -1,0 +1,64 @@
+  
+.node {
+    width: 27px;
+    height: 27px;
+    outline: 1px solid rgb(175, 216, 248); 
+
+    display: inline-block;
+    vertical-align: top;
+    
+  }
+.start-node{
+  /* background-color: lime; */
+  background-image: url(https://cdn.onlinewebfonts.com/svg/img_335254.png);
+  background-size: 21px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: opacity 0.3s ease-in;
+}
+.finish-node{
+  /* background-color: blue; */
+  background-image: url(https://image.flaticon.com/icons/png/512/67/67872.png);
+  /* background-position-x: center; */
+  background-size: 24px;
+  background-position: center center;
+  background-repeat:no-repeat ;
+  /* outline:none; */
+  animation: opacity 0.3s ease-in;
+}
+.visited{
+  background-color: darkcyan;
+}
+.wall-node{
+  background-color: rgb(12, 53, 71);
+  outline:none;
+  animation: wall-animation 0.3s ease-in;
+}
+.visited{
+  background-color: darkcyan;
+  outline-color:white;
+}
+.node-shortest-path {
+background-color:  rgb(255, 254, 106);
+}
+@keyframes wall-animation{
+  0%{
+    background-color: #fff;
+    outline: 1px solid rgb(175, 216, 248); 
+    opacity:0.5;
+  }
+  100%{
+    background-color: rgb(12, 53, 71);
+    outline:none;
+    opacity: 1;
+  }
+}
+@keyframes opacity{
+  0%{
+    opacity:0.3;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
