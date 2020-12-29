@@ -42,7 +42,7 @@ body{
     overflow: hidden;
   }
   
-  .dropdown .dropbtn ,.clear-board{
+  .dropdown .dropbtn ,.clear-walls,.clear-path{
     font-size: 16px;  
     border: none;
     outline: none;
@@ -54,7 +54,7 @@ body{
     transition: 0.3s ease-in;
   }
   
- header a:hover, .dropdown:hover .dropbtn,.clear-board:hover {
+ header a:hover, .dropdown:hover .dropbtn,.clear-walls:hover,.clear-path:hover {
     background-color: var(--darkerBlue);
    
   }
@@ -91,4 +91,7 @@ body{
 }
 i{
     margin:0 5px;
+}
+.current-node{
+  background-color: rgb(255, 255, 47);
 }

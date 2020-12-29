@@ -9,13 +9,19 @@ export default class Node extends Component{
             col,
             row,
             type,
-            isVisited,
             onMouseDown,
             onMouseEnter,
             onMouseUp,
             onMouseLeave
           } = this.props;
-        const extraClassName=type==='start'?'start-node':type==='finish'?'finish-node':type==='wall'?'wall-node':isVisited?'visited':''
+
+        const extraClassName=type==='start'?'start-node':
+                             type==='finish'?'finish-node':
+                             type==='wall'?'wall-node':
+                             type==='weight'?'weight-node':""
+
+        
+                           
         return ( <div
         id={`node-${row}-${col}`}
         className={`node ${extraClassName}`} 
