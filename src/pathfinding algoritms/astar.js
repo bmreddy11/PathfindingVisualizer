@@ -31,7 +31,12 @@ export function astar(grid,startNode,finishNode){
       if(neighbor.type==='wall')continue
       if(neighbor.closed)continue
 
-      const tentativeGscoreToNeighbor=currentNode.gScore+neighbor.weightValue
+      let tentativeGscoreToNeighbor
+      if(neighbor.type==='weight'){
+        tentativeGscoreToNeighbor=currentNode.gScore+10
+      }else{
+        tentativeGscoreToNeighbor=currentNode.gScore+1
+      }
 
       if(tentativeGscoreToNeighbor<neighbor.gScore){
         // console.log(neighbor)

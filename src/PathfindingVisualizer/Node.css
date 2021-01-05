@@ -33,9 +33,12 @@
   animation: wall-animation 0.3s ease-in;
 }
 .weight-node{
-  background-color:rgb(226, 226, 88) ;
-  outline: none;
-  animation: weight-animation 0.3s ease-in;
+  background-image: url(https://raw.githubusercontent.com/clementmihailescu/Pathfinding-Visualizer/c51f2d5fd3386b485694581ca0f324cf343f39b1/public/styling/weight.svg);
+  background-size: 22px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: opacity 0.3s ease-in;
+ 
 }
 .visited{
   outline-color:white;

@@ -2,12 +2,17 @@ import React, {Component} from 'react';
 
 import './PathfindingVisualizer.css';
 import Node from './Node'
+
 import { dijkstra,getShortestDijkstraPath } from '../pathfinding algoritms/dijkstra';
 import {astar ,getShortestAstarPath} from '../pathfinding algoritms/astar';
 import {bfs,getShortestBFSPath} from '../pathfinding algoritms/bfs';
-// import {dfs,getShortestDFSPath} from '../pathfinding algoritms/dfs';
-import {swarm,getShortestSwarmPath} from '../pathfinding algoritms/swarm';
+import{greedy,getShortestGreedyPath} from '../pathfinding algoritms/greedy';
 
+import randomMaze from '../maze algoritms/randomMaze'
+import  recursiveDivisionMaze  from '../maze algoritms/recursiveMaze';
+import  recursiveBacktracker  from '../maze algoritms/recursiveBacktracker';
+import spiral from '../maze algoritms/spriralMaze';
+import prim from '../maze algoritms/prim';
 
 let startNodeRow = 10;
 let startNodeCol = 10;
@@ -29,13 +34,13 @@ export default class PathfinidingVisualizer extends Component{
             
         }
         document.addEventListener('keydown', function(event){
-            if(event.key==="k"){
+            if(event.key==="w"){
                 wIsPressed=true
                 // console.log(wIsPressed)
             }
           })
           document.addEventListener('keyup', function(event){
-            if(event.key==="k"){
+            if(event.key==="w"){
                wIsPressed=false
             //    console.log(wIsPressed)
             }
@@ -45,6 +50,7 @@ export default class PathfinidingVisualizer extends Component{
     componentDidMount(){
           const grid=initializeGrid()
           this.setState({grid});
+         
     }
    
     
@@ -102,7 +108,7 @@ export default class PathfinidingVisualizer extends Component{
     }
 
     visualizeAlgorithm(algorithm) {
-      
+    //    this.clearPath(this.state.grid)
         switch (algorithm) {
             case 0:
                 break;
@@ -118,8 +124,8 @@ export default class PathfinidingVisualizer extends Component{
                 this.findPath(bfs,getShortestBFSPath)
                 break;
             case 4:
-                this.findPath(swarm,getShortestSwarmPath);
-                break;
+                this.findPath(greedy,getShortestGreedyPath);
+            break;
           default:
               break
         }
@@ -129,6 +135,7 @@ export default class PathfinidingVisualizer extends Component{
   
     findPath(algorithmCallback,getShortestPathCallback) {
         // this.setState({algorithmRunning:true})
+       
         let startNode = getNodeByType(this.state.grid,'start')
         let finishNode =getNodeByType(this.state.grid,'finish')
 
@@ -143,7 +150,7 @@ export default class PathfinidingVisualizer extends Component{
         )
        
         const nodeInShortestPath=getShortestPathCallback(finishNode)
-       
+        
         this.animateAlgorithm(visitedNodesInOrder,nodeInShortestPath);
        // algorithmRunning=false
     }
@@ -172,21 +179,78 @@ export default class PathfinidingVisualizer extends Component{
             document.getElementById(`node-${node.row}-${node.col}`).classList.add('node-shortest-path')
           }, 50 * i);
         }
+      
       }
+      visualizeMaze(algorithm) {
+        // this.clearWallsAndWeights(this.state.grid)
+        let newGrid
+        switch (algorithm) {
+            case 0:
+                break;
+            case 1:
+              this.findMaze(recursiveDivisionMaze,'wall')
+            break;
+            case 2:
+               this.findMaze(recursiveBacktracker,'normal-node')
+                break;
+            case 3:
+                this.findMaze(prim,'normal-node')
+            break;
+            case 4:
+                this.findMaze(spiral,'wall')
+                    break;
+            case 5:
+                 newGrid=randomMaze(this.state.grid,'wall')
+                 this.setState({grid:newGrid})
+                break;
+            case 6:
+                 newGrid=randomMaze(this.state.grid,'weight')
+                this.setState({grid:newGrid})
+                break;
+           
+          default:
+              break
+        }
+        
+      }
+      findMaze(mazeCallback,type){
+        this.clearWallsAndWeights(this.state.grid)
+        const startNode=getNodeByType(this.state.grid,'start')
+        const  finishNode=getNodeByType(this.state.grid,'finish')
+        const nodesToAnimate= mazeCallback(this.state.grid, startNode,finishNode)
+        this.animateMaze(nodesToAnimate,type)
+      }
+      animateMaze(nodesToAnimate,type) {
+        
+        for (let i = 1; i < nodesToAnimate.length; i++) {
+            
+          setTimeout(() => {
+            const node = nodesToAnimate[i];
+            if(node.type==='start'||node.type==='finish')return
+            const newGrid=getNewGridWithNewNodeType(this.state.grid,node.row,node.col,type)
+            this.setState({grid:newGrid})
+          },1);
+        }
+      }
+    clearWallsAndWeights(grid){
+        this.clearNodes(grid,'wall')
+        this.clearNodes(grid,'weight')
+    }
     clearNodes(grid,type){
         const newGrid=grid.slice()
         for (const row of newGrid) {
             for (const node of row) {
                console.log(node)
-               if(node.type===type){
-                   node.type="normal-node"
-                  
-               }
+               if(node.type==type){
+                node.type="normal-node"
+               
+               } 
             }
           }
         this.setState({grid:newGrid})
     }
-    
+  
+   
 
     render(){        
         const {grid} = this.state;
@@ -203,8 +267,7 @@ export default class PathfinidingVisualizer extends Component{
                         <button onClick={() => this.visualizeAlgorithm(1)}>Dijkstra</button>
                         <button onClick={() => this.visualizeAlgorithm(2)}>A*</button>
                         <button onClick={() => this.visualizeAlgorithm(3)}>BFS</button>
-                        <button onClick={() => this.visualizeAlgorithm(4)}>Swarm</button>
-                        <button>Bidirectional swarm</button>
+                        <button onClick={() => this.visualizeAlgorithm(4)}>Greedy best first search</button>
                     </div>
                     
                 </div>
@@ -213,9 +276,12 @@ export default class PathfinidingVisualizer extends Component{
                         <i className="fa fa-caret-down"></i>
                     </button>
                     <div className="dropdown-content">
-                        <button >Recursive maze 1</button>
-                        <button >Recursive maze 2</button>
-                        <button >Random Maze</button>
+                        <button onClick={() => this.visualizeMaze(1)}>Recursive Division maze</button>
+                        <button onClick={() => this.visualizeMaze(2)}>Recursive Backtracker</button>
+                        <button onClick={() => this.visualizeMaze(3)}>Randomized Prim's algorithm</button>
+                        <button onClick={() => this.visualizeMaze(4)}>Spriral Maze</button>
+                        <button onClick={() => this.visualizeMaze(5)}>Random Wall Maze</button>
+                        <button onClick={() => this.visualizeMaze(6)}>Random Weight Maze</button>
                     </div>
                 </div>
                 <div className="dropdown">
@@ -228,16 +294,18 @@ export default class PathfinidingVisualizer extends Component{
                         <button onClick={()=>changeAlgoritmSpeed(10)}>Fast</button>
                     </div>
                 </div>
-                <button className="clear-walls" onClick={()=>this.clearNodes(this.state.grid,'wall')}>Clear Walls </button>
-                <button className="clear-walls" onClick={()=>this.clearNodes(this.state.grid,'weight')}>Clear Weights </button>
-                {/* <button className="clear-path" onClick={()=>this.resetBoard(this.state.grid)}>Reset Board </button> */}
+                <button className="clear-walls" onClick={()=>this.clearWallsAndWeights(this.state.grid)}>Clear Walls & Weights </button>
+                {/* <button className="clear-walls" onClick={()=>this.clearBoard(this.state.grid)}>Clear Board </button>
+                <button className="clear-walls" onClick={()=>this.clearPath(this.state.grid)}>Clear Path </button> */}
+                
+               
             </div>
             <div className="grid">
                 {grid.map((row, rowIdx) => {
                     return (
                     <div key={rowIdx}>
                         {row.map((node, nodeIdx) => {
-                            const{row,col,type,weightValue,isVisited,distance,gScore,fScore,hScore,closed}=node
+                            const{row,col,type,isVisited,distance,gScore,fScore,hScore,closed}=node
                         
                         return (
                             <Node 
@@ -246,7 +314,7 @@ export default class PathfinidingVisualizer extends Component{
                             col={col}
                             type={type}
                             //isWall={isWall}
-                            weightValue={weightValue}
+                          
                             isVisited={isVisited}
                             distance={distance}
                             gScore={gScore}
@@ -303,12 +371,12 @@ const getNode=(row,col)=>{
 const getNewGridWithNewNodeType = (grid, row, col,newType) => {
   const newGrid = grid.slice();
   const node = newGrid[row][col];
-  let newWeightValue=newType==='weight'? 15:1;
+ 
   const newNode = {
     ...node,
     //isWall:!node.isWall,
     type:newType,
-    weightValue:newWeightValue
+    
     // isVisited:!isVisited
   };
   newGrid[row][col] = newNode;
