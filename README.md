@@ -1,25 +1,33 @@
 <h1>Pathfinding Visualizer</h1>
 <br/>
-Welcome to Pathfinding Visualizer! I built this application because I was fascinated by pathfinding algorithms, and I wanted to visualize them in action. I hope that you enjoy playing around with this visualization tool just as much as I enjoyed building it. You can access it here (use Google Chrome!): https://clementmihailescu.github.io/Pathfinding-Visualizer/
+A pathfinding algorithm is an algorithm that helps yoou find the shortest path bettween two points. This is a react.js appliction that visualizes them
 
-Meet the Algorithms
+<b>Pathfinding Algorithms</b>
+<br/>
 This application supports the following algorithms:
+<br/>
 
-Dijkstra's Algorithm (weighted): the father of pathfinding algorithms; guarantees the shortest path
+<b>Dijkstra's Algorithm</b> (weighted): the father of pathfinding algorithms; guarantees the shortest path
 
-A Search* (weighted): arguably the best pathfinding algorithm; uses heuristics to guarantee the shortest path much faster than Dijkstra's Algorithm
+<b>A* </b> (weighted): arguably the best pathfinding algorithm; uses heuristics to guarantee the shortest path much faster than Dijkstra's Algorithm
 
-Greedy Best-first Search (weighted): a faster, more heuristic-heavy version of A*; does not guarantee the shortest path
+<b>Greedy best first search</b> (weighted): a faster, more heuristic-heavy version of A*; does not guarantee the shortest path
 
-Swarm Algorithm (weighted): a mixture of Dijkstra's Algorithm and A*; does not guarantee the shortest-path
+<b>Breath first search</b>(unweighted): a great algorithm; guarantees the shortest path
 
-Convergent Swarm Algorithm (weighted): the faster, more heuristic-heavy version of Swarm; does not guarantee the shortest path
+<b>Maze Algorithms</b>
+<br/>
+This application supports the following maze algorithms:
+<br/>
 
-Bidirectional Swarm Algorithm (weighted): Swarm from both sides; does not guarantee the shortest path
+<b>Recursive division maze</b> 
 
-Breath-first Search (unweighted): a great algorithm; guarantees the shortest path
+<b>Recursive backtracker </b>
 
-Depth-first Search (unweighted): a very bad algorithm for pathfinding; does not guarantee the shortest path
+<b>Randomized Prim' Algorithm</b>
 
-On top of the pathfinding algorithms listed above, I implemented a Recursive Division Maze Generation algorithm.
+<b>Spiral Maze</b>
+
+<b>Random Mazes</b>
+
 
