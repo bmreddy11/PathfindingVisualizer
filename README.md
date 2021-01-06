@@ -1,7 +1,7 @@
 <h1>Pathfinding Visualizer</h1>
 <br/>
 A pathfinding algorithm is an algorithm that helps yoou find the shortest path bettween two points. This is a react.js appliction that visualizes them
-
+<br/>
 <b>Pathfinding Algorithms</b>
 <br/>
 This application supports the following algorithms:
