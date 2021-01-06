@@ -1,17 +1,10 @@
 <h1>Pathfinding Visualizer</h1>
-<br/>
 
-A pathfinding algorithm is an algorithm that helps yoou find the shortest path bettween two points. This is a react.js appliction that visualizes them
-
-<br/>
+A pathfinding algorithm is an algorithm that helps yoou find the shortest path bettween two points. This is a react.js appliction that visualizes the
 
 <b>Pathfinding Algorithms</b>
 
-<br/>
-
 This application supports the following algorithms:
-
-<br/>
 
 <b>Dijkstra's Algorithm</b> (weighted): the father of pathfinding algorithms; guarantees the shortest path
 
